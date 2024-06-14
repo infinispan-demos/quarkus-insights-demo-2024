@@ -8,8 +8,8 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.infinispan.bounded.Developer;
-import org.infinispan.bounded.DevelopersService;
+import org.infinispan.schema.Developer;
+import org.infinispan.schema.DevelopersService;
 
 
 @Path("/hello")

@@ -1,8 +1,8 @@
-package org.infinispan.bounded;
+package org.infinispan.schema;
 
-import io.quarkus.infinispan.client.CacheInvalidate;
-import io.quarkus.infinispan.client.CacheInvalidateAll;
-import io.quarkus.infinispan.client.CacheResult;
+//import io.quarkus.cache.CacheInvalidate;
+//import io.quarkus.cache.CacheInvalidateAll;
+//import io.quarkus.cache.CacheResult;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -26,19 +26,19 @@ public class DevelopersService {
       data.put(nickname, developer);
    }
 
-   @CacheResult(cacheName = "developers")
+//   @CacheResult(cacheName = "developers")
    public Developer getDeveloper(String nickname) {
       Log.info("Getting from service call " + nickname);
       return data.get(nickname);
    }
 
-   @CacheInvalidate(cacheName = "developers")
+//   @CacheInvalidate(cacheName = "developers")
    public void removeDeveloper(String nickname) {
       Log.info("Remove " + nickname);
       data.remove(nickname);
    }
 
-   @CacheInvalidateAll(cacheName = "developers" )
+//   @CacheInvalidateAll(cacheName = "developers" )
    public void removeAll() {
       Log.info("Clear all");
       data.clear();

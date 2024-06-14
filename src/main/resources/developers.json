@@ -1,17 +1,19 @@
 {
   "distributed-cache": {
+    "owners": "2",
     "mode": "SYNC",
-    "owners": 2,
     "statistics": true,
     "encoding": {
       "media-type": "application/x-protostream"
     },
-    "locking": {
-      "isolation": "REPEATABLE_READ"
-    },
-    "memory": {
-      "max-count": 3,
-      "when-full": "REMOVE"
+    "indexing": {
+      "enabled": true,
+      "storage": "filesystem",
+      "startup-mode": "AUTO",
+      "indexing-mode": "AUTO",
+      "indexed-entities": [
+        "insights.Developer"
+      ]
     }
   }
 }
