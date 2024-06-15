@@ -1,4 +1,4 @@
-package org.infinispan.service;
+package org.infinispan.books;
 
 import org.infinispan.protostream.MessageMarshaller;
 

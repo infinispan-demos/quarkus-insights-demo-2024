@@ -1,4 +1,4 @@
-package org.infinispan.service;
+package org.infinispan.books;
 
 import io.quarkus.infinispan.client.Remote;
 import jakarta.enterprise.context.ApplicationScoped;

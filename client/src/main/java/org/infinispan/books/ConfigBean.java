@@ -1,7 +1,8 @@
-package org.infinispan.service;
+package org.infinispan.books;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;
+import org.infinispan.books.BookMarshaller;
 import org.infinispan.protostream.MessageMarshaller;
 import org.infinispan.protostream.schema.Schema;
 import org.infinispan.protostream.schema.Type;

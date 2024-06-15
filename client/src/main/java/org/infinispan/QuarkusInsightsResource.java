@@ -9,7 +9,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import org.infinispan.schema.Developer;
-import org.infinispan.schema.DevelopersService;
+import org.infinispan.service.DevelopersService;
 
 
 @Path("/hello")
@@ -20,7 +20,6 @@ public class QuarkusInsightsResource {
    public String hello() {
       return "Hello Quarkus";
    }
-
 
    @Inject
    DevelopersService developersService;
@@ -35,8 +34,7 @@ public class QuarkusInsightsResource {
       }
       return Response.ok(developersService.getDeveloper(nickname)).build();
    }
-//
-//
+
    @DELETE
    @Produces(MediaType.TEXT_PLAIN)
    @Path("/{nickname}")
@@ -44,12 +42,4 @@ public class QuarkusInsightsResource {
       developersService.removeDeveloper(nickname);
       return Response.ok().build();
    }
-//
-//   @DELETE
-//   @Produces(MediaType.TEXT_PLAIN)
-//   public Response removeAll() {
-//      developersService.removeAll();
-//      return Response.ok().build();
-//   }
-
 }

@@ -1,13 +1,16 @@
-package org.infinispan.schema;
+package org.infinispan.developers;
 
-//import io.quarkus.cache.CacheInvalidate;
-//import io.quarkus.cache.CacheInvalidateAll;
-//import io.quarkus.cache.CacheResult;
+import io.quarkus.infinispan.client.Remote;
 import io.quarkus.logging.Log;
+import io.quarkus.runtime.LaunchMode;
+import io.quarkus.runtime.StartupEvent;
+import io.quarkus.runtime.configuration.ProfileManager;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import org.infinispan.client.hotrod.RemoteCache;
 
 import java.util.AbstractMap;
-import java.util.HashMap;
 import java.util.Map;
 
 @ApplicationScoped
@@ -19,29 +22,33 @@ public class DevelopersService {
          new AbstractMap.SimpleEntry("ttarrant", new Developer("Tristan", "Tarrant", "Infinispan"))
    );
 
-   Map<String, Developer> data = new HashMap<>(REF_DATA);
+   @Inject
+   @Remote("developers")
+   RemoteCache<String, Developer> developers;
+
+   public void start(@Observes StartupEvent event) {
+      if (ProfileManager.getLaunchMode().equals(LaunchMode.DEVELOPMENT)) {
+         developers.putAll(REF_DATA);
+      }
+   }
 
    public void addDeveloper(String nickname, Developer developer) {
       Log.info(developer);
-      data.put(nickname, developer);
+      developers.put(nickname, developer);
    }
 
-//   @CacheResult(cacheName = "developers")
    public Developer getDeveloper(String nickname) {
       Log.info("Getting from service call " + nickname);
-      return data.get(nickname);
+      return developers.get(nickname);
    }
 
-//   @CacheInvalidate(cacheName = "developers")
    public void removeDeveloper(String nickname) {
       Log.info("Remove " + nickname);
-      data.remove(nickname);
+      developers.remove(nickname);
    }
 
-//   @CacheInvalidateAll(cacheName = "developers" )
    public void removeAll() {
       Log.info("Clear all");
-      data.clear();
-      data.putAll(REF_DATA);
+      developers.clear();
    }
 }

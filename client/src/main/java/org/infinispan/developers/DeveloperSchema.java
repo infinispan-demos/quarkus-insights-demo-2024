@@ -1,4 +1,4 @@
-package org.infinispan.schema;
+package org.infinispan.developers;
 
 import org.infinispan.protostream.GeneratedSchema;
 import org.infinispan.protostream.annotations.ProtoSchema;

@@ -1,4 +1,4 @@
-package org.infinispan.schema;
+package org.infinispan.developers;
 
 import org.infinispan.api.annotations.indexing.Indexed;
 import org.infinispan.api.annotations.indexing.Text;

@@ -1,20 +1,19 @@
-package org.infinispan.service;
+package org.infinispan.books;
 
 import io.quarkus.infinispan.client.Remote;
 import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.infinispan.client.hotrod.RemoteCache;
-import org.infinispan.client.hotrod.RemoteCacheManager;
+import org.infinispan.service.Book;
+import org.infinispan.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 @QuarkusTest
 public class BookServiceTest {
-
     @InjectMock
     @Remote("books")
     RemoteCache<String, Book> bookRemoteCache;
