@@ -5,8 +5,6 @@ import io.quarkus.test.InjectMock;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
 import org.infinispan.client.hotrod.RemoteCache;
-import org.infinispan.service.Book;
-import org.infinispan.service.BookService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
