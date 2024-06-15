@@ -1,0 +1,19 @@
+{
+  "distributed-cache": {
+    "owners": "2",
+    "mode": "SYNC",
+    "statistics": true,
+    "encoding": {
+      "media-type": "application/x-protostream"
+    },
+    "indexing": {
+      "enabled": true,
+      "storage": "filesystem",
+      "startup-mode": "AUTO",
+      "indexing-mode": "AUTO",
+      "indexed-entities": [
+        "insights.Developer"
+      ]
+    }
+  }
+}
