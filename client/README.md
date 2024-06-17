@@ -3,10 +3,10 @@
 # New Protostream API
 
 ## Annotations based
+
 ```java
 @Proto
-@Indexed
-public record Developer( String firstName, String lastName, @Text String project) {
+public record Developer( String firstName, String lastName, String project) {
 }
 ```
 
@@ -89,6 +89,11 @@ http localhost:8080/developers/ttarrant
 
 ## Cross Site Replication
 
+```properties
+quarkus.infinispan-client.devservices.site=LOL
+quarkus.infinispan-client.devservices.mcast-port=46656
+```
+
 ## Providing server conf on Dev Services
 
 ```properties
@@ -96,12 +101,19 @@ quarkus.infinispan-client.devservices.config-files=infinispan-config.xml
 #quarkus.infinispan-client.cache.developers.configuration-uri=developers.json
 ```
 
-```properties
-quarkus.infinispan-client.devservices.site=LOL
-quarkus.infinispan-client.devservices.mcast-port=46656
-```
-
 # Search API
+
+## Serch on values
+
+```java
+@Proto
+@Indexed
+public record Developer(@Text(projectable = true) String firstName,
+                        @Text(projectable = true) String lastName,
+                        @Text(projectable = true) String project) {
+}
+```
+```
 
 ## Search on Keys
 
