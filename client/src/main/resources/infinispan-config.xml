@@ -1,15 +1,21 @@
 <infinispan>
     <cache-container>
-        <distributed-cache name="mycache"></distributed-cache>
-        <distributed-cache name="one-cache" owners="2" mode="SYNC" statistics="true">
-            <backups>
-                <backup site="NYC" strategy="ASYNC"/>
-            </backups>
+        <distributed-cache name="developers" owners="2" mode="SYNC" statistics="true">
             <encoding media-type="application/x-protostream"/>
-            <memory max-size="3MB" when-full="REMOVE"/>
-            <security>
-                <authorization enabled="true" roles="admin monitor deployer"/>
-            </security>
+            <indexing enabled="true" storage="filesystem" startup-mode="AUTO" indexing-mode="AUTO">
+                <indexed-entities>
+                    <indexed-entity>insights.Developer</indexed-entity>
+                </indexed-entities>
+            </indexing>
+        </distributed-cache>
+        <distributed-cache name="developers2" owners="2" mode="SYNC" statistics="true">
+            <encoding media-type="application/x-protostream"/>
+            <indexing enabled="true" storage="filesystem" startup-mode="AUTO" indexing-mode="AUTO">
+                <indexed-entities>
+                    <indexed-entity>insights.Project</indexed-entity>
+                    <indexed-entity>insights.Developer</indexed-entity>
+                </indexed-entities>
+            </indexing>
         </distributed-cache>
     </cache-container>
 </infinispan>

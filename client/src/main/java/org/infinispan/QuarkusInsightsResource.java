@@ -8,11 +8,15 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.infinispan.schema.Developer;
-import org.infinispan.service.DevelopersService;
+import org.infinispan.developers.Developer;
+import org.infinispan.developers.DevelopersService;
+import org.infinispan.developers.Project;
+import org.jboss.resteasy.reactive.RestQuery;
+
+import java.util.List;
 
 
-@Path("/hello")
+@Path("/developers")
 public class QuarkusInsightsResource {
 
    @GET
@@ -33,6 +37,20 @@ public class QuarkusInsightsResource {
          return Response.status(Response.Status.NOT_FOUND).build();
       }
       return Response.ok(developersService.getDeveloper(nickname)).build();
+   }
+
+   @GET
+   @Produces(MediaType.TEXT_PLAIN)
+   @Path("/search/")
+   public List<Developer> findDeveloperOnValues(@RestQuery("term") String term) {
+      return developersService.searchOnValues(term);
+   }
+
+   @GET
+   @Produces(MediaType.TEXT_PLAIN)
+   @Path("/search2/")
+   public List<ProjectDTO> findProjets(@RestQuery("term") String term) {
+      return developersService.searchKeysAndValues(term);
    }
 
    @DELETE
