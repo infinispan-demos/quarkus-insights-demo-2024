@@ -68,7 +68,22 @@ public class BookMarshaller implements MessageMarshaller<Book> {
 }
 ```
 
-# Dev Services
+# Named Connections
+
+```properties
+quarkus.infinispan-client.devservices.enabled=false
+quarkus.infinispan-client.insights.devservices.image-name=infinispan-test/server:main
+quarkus.infinispan-client.insights.devservices.port=11222
+quarkus.infinispan-client.insights.cache.developers.configuration-uri=developers.json
+```
+
+```shell
+http localhost:8080/developers/ttarrant
+```
+
+```java
+@InfinispanClientName("insights")
+```
 
 # Dev Services
 
@@ -85,10 +100,6 @@ quarkus.infinispan-client.devservices.config-files=infinispan-config.xml
 quarkus.infinispan-client.devservices.site=LOL
 quarkus.infinispan-client.devservices.mcast-port=46656
 ```
-
-
-# Named Connections
-
 
 # Search API
 
