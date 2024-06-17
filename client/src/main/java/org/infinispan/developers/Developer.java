@@ -6,7 +6,7 @@ import org.infinispan.protostream.annotations.Proto;
 
 @Proto
 @Indexed
-public record Developer(@Text(projectable = true) String firstName,
-                        @Text(projectable = true) String lastName,
-                        @Text(projectable = true) String project) {
+public record Developer(@Text String firstName,
+                        @Text String lastName,
+                        @Text String project) {
 }

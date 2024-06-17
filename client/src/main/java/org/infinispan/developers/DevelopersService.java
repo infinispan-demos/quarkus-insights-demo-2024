@@ -1,5 +1,6 @@
 package org.infinispan.developers;
 
+import io.quarkus.infinispan.client.InfinispanClientName;
 import io.quarkus.infinispan.client.Remote;
 import io.quarkus.logging.Log;
 import io.quarkus.runtime.StartupEvent;
@@ -14,7 +15,6 @@ import org.infinispan.commons.api.query.Query;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class DevelopersService {
@@ -35,12 +35,14 @@ public class DevelopersService {
    @Remote("developers")
    RemoteCache<String, Developer> developers;
 
-   @Inject
-   @Remote("developers2")
-   RemoteCache<Developer, Project> developers2;
-
    @ConfigProperty(name = "load", defaultValue = "false")
    boolean load;
+
+   public void start(@Observes StartupEvent event) {
+      if (load) {
+         developers.putAll(REF_DATA);
+      }
+   }
 
    public Developer getDeveloper(String nickname) {
       Log.info("Getting from service call " + nickname);
@@ -54,19 +56,8 @@ public class DevelopersService {
       return query.execute().list();
    }
 
-   public List<Project> pepepe(String term) {
-      Query<Project> query = developers2.query("from insights.Project p where p.project : :t1 or  p.key.firstName : :t2");
-      query.setParameter("t1", term);
-      query.setParameter("t2", term);
-      return query.execute().list();
-   }
-
    public List<ProjectDTO> searchKeysAndValues(String term) {
-      Query<Object[]> query = developers2.query("select p.key.firstName,  p.key.lastName, p.project, p.role from insights.Project p where p.project : :t1 or  p.key.firstName : :t2");
-      query.setParameter("t1", term);
-      query.setParameter("t2", term);
-      return query.execute().list().stream().map(r -> new ProjectDTO(r[0] + " " + r[1], r[2] + "", r[3] +"")
-      ).collect(Collectors.toList());
+      return null;
    }
 
    public void addDeveloper(String nickname, Developer developer) {
@@ -84,10 +75,4 @@ public class DevelopersService {
       developers.clear();
    }
 
-   public void start(@Observes StartupEvent event) {
-      if (load) {
-         developers.putAll(REF_DATA);
-         developers2.putAll(REF_DATA2);
-      }
-   }
 }
