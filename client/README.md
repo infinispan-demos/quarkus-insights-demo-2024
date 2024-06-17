@@ -1,5 +1,13 @@
 ## Infinispan Client with Infinispan 15
 
+Start with :
+
+```bash
+
+http localhost:8080/developers/ttarrant 
+
+```
+
 # New Protostream API
 
 ## Annotations based
@@ -68,13 +76,20 @@ public class BookMarshaller implements MessageMarshaller<Book> {
 }
 ```
 
+```json
+{
+  "_type": "insights.Book",
+  "title": "Quarkus 4.0",
+  "description" : "The next generation for Java Apps"
+}
+```
+
 # Named Connections
 
 ```properties
 quarkus.infinispan-client.devservices.enabled=false
 quarkus.infinispan-client.insights.devservices.image-name=infinispan-test/server:main
 quarkus.infinispan-client.insights.devservices.port=11222
-quarkus.infinispan-client.insights.cache.developers.configuration-uri=developers.json
 ```
 
 ```shell
@@ -89,21 +104,19 @@ http localhost:8080/developers/ttarrant
 
 ## Cross Site Replication
 
-```properties
-quarkus.infinispan-client.devservices.site=LOL
-quarkus.infinispan-client.devservices.mcast-port=46656
-```
-
 ## Providing server conf on Dev Services
 
 ```properties
 quarkus.infinispan-client.devservices.config-files=infinispan-config.xml
-#quarkus.infinispan-client.cache.developers.configuration-uri=developers.json
 ```
 
 # Search API
 
-## Serch on values
+## Search on values
+
+```bash
+http 'localhost:8080/developers/search?term=tristan'
+```
 
 ```java
 @Proto
@@ -113,15 +126,16 @@ public record Developer(@Text(projectable = true) String firstName,
                         @Text(projectable = true) String project) {
 }
 ```
-```
 
 ## Search on Keys
 
 ```java
+
 @Proto
 @Indexed(keyEntity = "insights.Developer")
 public record Project(@Text(projectable = true) String project, @Text(projectable = true) String role) {
 }
+
 ```
 
 ```java
@@ -181,6 +195,25 @@ public List<ProjectDTO> searchKeysAndValues(String term) {
 ```
 
 ## Add a Unit test
+
+```java
+public class BookService {
+
+    @Inject
+    @Remote("books")
+    RemoteCache<String, Book> books;
+
+    public String getBookDescriptionById(String id) {
+        Book book = books.get(id);
+        if (book == null) {
+            return "default";
+        }
+
+        return book.description();
+    }
+
+}
+```
 
 ```java
 @QuarkusTest

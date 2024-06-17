@@ -1,10 +1,12 @@
 package org.infinispan.developers;
 
+import org.infinispan.api.annotations.indexing.Indexed;
 import org.infinispan.protostream.annotations.ProtoFactory;
 import org.infinispan.protostream.annotations.ProtoField;
 
 import java.util.Objects;
 
+@Indexed
 public class Developer {
     public String firstName;
     public String lastName;
