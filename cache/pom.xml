@@ -32,7 +32,7 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-cache</artifactId>
+            <artifactId>quarkus-infinispan-cache</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>

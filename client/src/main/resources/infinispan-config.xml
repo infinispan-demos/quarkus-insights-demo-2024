@@ -8,5 +8,14 @@
                 </indexed-entities>
             </indexing>
         </distributed-cache>
+        <distributed-cache name="developers2" owners="2" mode="SYNC" statistics="true">
+            <encoding media-type="application/x-protostream"/>
+            <indexing enabled="true" storage="filesystem" startup-mode="AUTO" indexing-mode="AUTO">
+                <indexed-entities>
+                    <indexed-entity>insights.Project</indexed-entity>
+                    <indexed-entity>insights.Developer</indexed-entity>
+                </indexed-entities>
+            </indexing>
+        </distributed-cache>
     </cache-container>
 </infinispan>

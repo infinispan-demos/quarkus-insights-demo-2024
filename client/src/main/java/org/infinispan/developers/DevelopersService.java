@@ -15,6 +15,7 @@ import org.infinispan.commons.api.query.Query;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class DevelopersService {
@@ -35,12 +36,17 @@ public class DevelopersService {
    @Remote("developers")
    RemoteCache<String, Developer> developers;
 
+   @Inject
+   @Remote("developers2")
+   RemoteCache<Developer, Project> developers2;
+
    @ConfigProperty(name = "load", defaultValue = "false")
    boolean load;
 
    public void start(@Observes StartupEvent event) {
       if (load) {
          developers.putAll(REF_DATA);
+         developers2.putAll(REF_DATA2);
       }
    }
 
@@ -57,7 +63,12 @@ public class DevelopersService {
    }
 
    public List<ProjectDTO> searchKeysAndValues(String term) {
-      return null;
+      Query<Object[]> query =  developers2.query("select p.key.firstName,  p.key.lastName, p.project, p.role from insights.Project p where p.project : :t1 or  p.key.firstName : :t2");
+      query.setParameter("t1", term);
+      query.setParameter("t2", term);
+
+      return query.execute().list().stream().map(r -> new ProjectDTO(r[0] + " " + r[1], r[2] + "", r[3] +"")
+      ).collect(Collectors.toList());
    }
 
    public void addDeveloper(String nickname, Developer developer) {
